@@ -37,6 +37,18 @@ class TotalDataService {
             throw new Error('Impossible de récupérer l\'expense');
         }
     }
+
+    async updateExpenseAmount(id, amount) {
+        try {
+            const response = await axios.post(JAVA_API_EXPENSES_URL + '/update', null, {
+                params: { id, amount }
+            });
+            console.log(`Updated expense with id=${id}: `, response.data);
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response.data.data);
+        }
+    }
 }
 
 module.exports = new TotalDataService();
