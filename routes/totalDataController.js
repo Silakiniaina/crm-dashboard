@@ -81,4 +81,29 @@ router.get('/expense-update-details', async (req, res) => {
     }
 });
 
+router.post('/expense-update-details', async (req, res) => {
+    try {
+        const id = parseInt(req.body.id);
+        const amount = parseFloat(req.body.amount);
+        await totalDataService.updateExpenseAmount(id, amount);
+        let type = req.query.type;
+        if (!type) {
+            const expenseData = await totalDataService.getExpenseById(id);
+            type = expenseData.data.ticket ? '1' : expenseData.data.lead ? '2' : null;
+        }
+
+
+        if (!type) {
+            throw new Error('Unable to determine expense type');
+        }
+
+        res.redirect(`/data-total/details?type=${type}`);
+    } catch (error) {
+        res.status(500).render('error', { 
+            title: 'Error', 
+            message: error
+        });
+    }
+});
+
 module.exports = router;
