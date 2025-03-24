@@ -6,7 +6,6 @@ router.get('/data-total', async (req, res) => {
     try {
         const responseData = await totalDataService.getTotalData(); 
         const totalData = responseData.data; 
-        console.log("Controller: ", totalData);
         res.render('dashboard', { 
             title: 'Dashboard for total data', 
             totalData
@@ -56,6 +55,28 @@ router.get('/data-total/details', async (req, res) => {
         res.status(500).render('error', { 
             title: 'Error', 
             message: 'Error while fetching details' 
+        });
+    }
+});
+
+router.get('/expense-update-details', async (req, res) => {
+    try {
+        const id = parseInt(req.query.id);
+        const responseData = await totalDataService.getExpenseById(id);
+        const expense = responseData.data;
+        const type = expense.ticket ? '1' : expense.lead ? '2' : null;
+        res.render('expense-update-details', {
+            title: 'Update Expense Amount',
+            expenseId: id,
+            amount: expense.amount.toString(),
+            type,
+            page: 'expense-update-details'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { 
+            title: 'Error', 
+            message: 'Error while fetching expense details' 
         });
     }
 });
