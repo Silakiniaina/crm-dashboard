@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main>
+    <h1><%= title %></h1>
+    <section class="dashboard">
+        <div class="data-card">
+            <h2>Total budget</h2>
+            <p><%= totalData.totalBudget.toFixed(2) %> Ar</p>
+        </div>
+        <div class="data-card">
+            <h2>Total Ticket Expense</h2>
+            <p><%= totalData.totalTicketExpense.toFixed(2) %> Ar</p>
+        </div>
+        <div class="data-card">
+            <h2>Total Lead Expense</h2>
+            <p><%= totalData.totalLeadExpense.toFixed(2) %> Ar</p>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
