@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main>
+    <h1><%= title %></h1>
+    <section class="details">
+        <% if (details && details.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Label</th>
+                        <th>Amount (Ar)</th>
+                        <th>Created At</th>
+                        <th>Description</th>
+                        <th>Created By</th>
+                        <% if (type === '1') { %>
+                            <th>Ticket ID</th>
+                        <% } else if (type === '2') { %>
+                            <th>Lead ID</th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% details.forEach(expense => {
+
+                        %>
+                        <tr>
+                            <td><%= expense.id %></td>
+                            <td><%= expense.label %></td>
+                            <td><%= expense.amount.toString() %></td>
+                            <td><%= expense.createdAt %></td>
+                            <td><%= expense.description || 'N/A' %></td>
+                            <td><%= expense.createdBy.username %></td>
+                            <% if (type === '1' && expense.ticket) { %>
+                                <td><%= expense.ticket.ticketId %></td>
+                            <% } else if (type === '2' && expense.lead) { %>
+                                <td><%= expense.lead.leadId %></td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No expense details available.</p>
+        <% } %>
+        <a href="/data-total">Back to Dashboard</a>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

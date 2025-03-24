@@ -5,16 +5,19 @@
     <h1><%= title %></h1>
     <section class="dashboard">
         <div class="data-card">
-            <h2>Total budget</h2>
+            <h2>Total Budget</h2>
             <p><%= totalData.totalBudget.toFixed(2) %> Ar</p>
+            <a href="/data-total/details?type=0">View Details</a>
         </div>
         <div class="data-card">
             <h2>Total Ticket Expense</h2>
             <p><%= totalData.totalTicketExpense.toFixed(2) %> Ar</p>
+            <a href="/data-total/details?type=1">View Details</a>
         </div>
         <div class="data-card">
             <h2>Total Lead Expense</h2>
             <p><%= totalData.totalLeadExpense.toFixed(2) %> Ar</p>
+            <a href="/data-total/details?type=2">View Details</a>
         </div>
     </section>
 </main>
