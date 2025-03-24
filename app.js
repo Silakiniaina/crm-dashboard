@@ -1,20 +1,20 @@
 const express = require('express');
-const path = require('path');
-const totalDataController = require('./routes/totalDataController');
-
 const app = express();
-const PORT = 3000;
 
-// Configuration du moteur de vues EJS
+// Middleware to parse URL-encoded form data
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files (if not already added)
+app.use(express.static('public'));
+
+// Set view engine (assuming EJS)
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+const totalDataController = require('./routes/totalDataController');
 app.use('/', totalDataController);
 
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
+// Start server
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
 });
