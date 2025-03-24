@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main>
+    <h1>Budget Details</h1>
+    <section class="details">
+        <% if (details && details.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Amount (Ar)</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                        <th>Customer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% details.forEach(budget => { %>
+                        <tr>
+                            <td><%= budget.id %></td>
+                            <td><%= budget.amount.toFixed(2) %></td>
+                            <td><%= budget.createdAt %></td>
+                            <td><%= budget.createdBy.username %></td>
+                            <td><%= budget.customer.name %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No budget details available.</p>
+        <% } %>
+        <a href="/data-total" class="back-link">Back to Dashboard</a>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
