@@ -21,9 +21,9 @@ const expenseRoutes = require('./routes/expenseRoutes');
 const thresholdRoutes = require('./routes/thresholdRoutes');
 
 // Mount routes
-app.use('/data-total', totalDataRoutes);
-app.use('/expenses', expenseRoutes);
-app.use('/data-total', thresholdRoutes);
+app.use('/', totalDataRoutes);
+app.use('/', expenseRoutes);
+app.use('/threshold', thresholdRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
