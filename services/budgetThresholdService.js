@@ -12,6 +12,16 @@ class ThresholdService {
             throw new Error('Unable to retrieve threshold');
         }
     }
+
+    async updateThreshold(id, threshold) {
+        try {
+            const response = await axios.put(BASE_URL, { id, threshold });
+            return response.data;
+        } catch (error) {
+            console.error(`Error updating threshold:`, error);
+            throw new Error('Unable to update threshold');
+        }
+    }
 }
 
 module.exports = new ThresholdService();
