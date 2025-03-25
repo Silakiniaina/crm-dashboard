@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const LeadController = require('../controllers/ticketController');
+const TicketController = require('../controllers/ticketController');
 
-router.get('/', LeadController.getAllTickets);
+router.get('/', TicketController.getAllTickets);
+router.post('/:id', TicketController.deleteTicket);
 
 module.exports = router;
