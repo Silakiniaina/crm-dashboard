@@ -18,6 +18,23 @@ class LeadController{
             });
         }
     }
+
+    async deleteLead(req, res){
+        try {
+            const id = parseInt(req.body.id);
+            await LeadService.deleteLead(id);
+            res.render('all-leads',{
+                title : 'All leads',
+                message : 'Lead deleted successfully'
+            })
+        } catch (error) {
+            console.error(error);
+            res.status(500).render('error', { 
+                title: 'Error', 
+                message: 'Error while deleting lead' 
+            });
+        }
+    }
 }
 
 module.exports = new LeadController();
