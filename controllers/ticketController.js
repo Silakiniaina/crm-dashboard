@@ -19,6 +19,20 @@ class TicketController{
         }
     }
 
+    async deleteTicket(req, res){
+        try {
+            const id = parseInt(req.params.id);
+            await TicketService.deleteTicket(id);
+            res.redirect(`/tickets`);
+        } catch (error) {
+            console.error(error);
+            res.status(500).render('error', { 
+                title: 'Error', 
+                message: 'Error while deleting ticket' 
+            });
+        }
+    }
+
 }
 
 module.exports = new TicketController();
