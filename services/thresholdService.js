@@ -1,22 +1,26 @@
-const axios = require('axios');
-const BASE_URL = 'http://localhost:8080/api/budget-thresholds';
+const authUtils = require('../utils/authUtils');
 
 class ThresholdService {
 
-    async getThreshold() {
+    async getThreshold(req, res) {
         try {
-            const response = await axios.get(BASE_URL);
-            return response.data;
+            const data = await authUtils.authenticatedFetch(req, res, '/api/budget-thresholds');
+            if (!data) return null;
+            return data;
         } catch (error) {
             console.error("Error fetching threshold:", error);
             throw new Error('Unable to retrieve threshold');
         }
     }
 
-    async updateThreshold(id, threshold) {
+    async updateThreshold(req, res, id, threshold) {
         try {
-            const response = await axios.put(BASE_URL, { id, threshold });
-            return response.data;
+            const data = await authUtils.authenticatedFetch(req, res, '/api/budget-thresholds', {
+                method: 'PUT',
+                body: { id, threshold }
+            });
+            if (!data) return null;
+            return data;
         } catch (error) {
             console.error(`Error updating threshold:`, error);
             throw new Error('Unable to update threshold');

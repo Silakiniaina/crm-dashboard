@@ -1,22 +1,26 @@
-const axios = require('axios');
-const BASE_URL = 'http://localhost:8080/api/expenses';
+const authUtils = require('../utils/authUtils');
 
 class ExpenseService {
 
-    async getExpenseById(id) {
+    async getExpenseById(req, res, id) {
         try {
-            const response = await axios.get(`${BASE_URL}/${id}`);
-            return response.data;
+            const data = await authUtils.authenticatedFetch(req, res, `/api/expenses/${id}`);
+            if (!data) return null;
+            return data;
         } catch (error) {
             console.error(`Error fetching expense with id=${id}:`, error);
             throw new Error('Unable to retrieve expense');
         }
     }
 
-    async updateExpense(id, amount) {
+    async updateExpense(req, res, id, amount) {
         try {
-            const response = await axios.put(`${BASE_URL}/${id}`, { amount });
-            return response.data;
+            const data = await authUtils.authenticatedFetch(req, res, `/api/expenses/${id}`, {
+                method: 'PUT',
+                body: { amount }
+            });
+            if (!data) return null;
+            return data;
         } catch (error) {
             console.error(`Error updating expense with id=${id}:`, error);
             throw new Error('Unable to update expense');
