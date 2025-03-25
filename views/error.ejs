@@ -1,12 +1,11 @@
 <%- include('partials/header') %>
-<link rel="stylesheet" href="/css/details.css">
 <%- include('partials/navbar') %>
 
-<main>
-    <h1><%= title %></h1>
+<main class="container mt-5">
+    <h1 class="mb-4"><%= title %></h1>
     <section class="details">
-        <p><%= message %></p>
-        <a href="/dashboard" class="back-link">Back to Dashboard</a>
+        <div class="alert alert-info"><%= message %></div>
+        <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
     </section>
 </main>
 
