@@ -1,25 +1,37 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<main>
-    <h1><%= title %></h1>
-    <section class="dashboard">
-        <div class="data-card">
-            <h2>Total Budget</h2>
-            <p><%= totalData.totalBudget.toFixed(2) %> Ar</p>
-            <a href="/data-total/details?type=0">View Details</a>
+<main class="container mt-5">
+    <h1 class="mb-4"><%= title %></h1>
+    <div class="dashboard row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Budget</h5>
+                    <p class="card-text"><%= totalData.totalBudget.toFixed(2) %> Ar</p>
+                    <a href="/data-total/details?type=0" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
         </div>
-        <div class="data-card">
-            <h2>Total Ticket Expense</h2>
-            <p><%= totalData.totalTicketExpense.toFixed(2) %> Ar</p>
-            <a href="/data-total/details?type=1">View Details</a>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ticket Expenses</h5>
+                    <p class="card-text"><%= totalData.totalTicketExpense.toFixed(2) %> Ar</p>
+                    <a href="/data-total/details?type=1" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
         </div>
-        <div class="data-card">
-            <h2>Total Lead Expense</h2>
-            <p><%= totalData.totalLeadExpense.toFixed(2) %> Ar</p>
-            <a href="/data-total/details?type=2">View Details</a>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Lead Expenses</h5>
+                    <p class="card-text"><%= totalData.totalLeadExpense.toFixed(2) %> Ar</p>
+                    <a href="/data-total/details?type=2" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 </main>
 
 <%- include('partials/footer') %>
