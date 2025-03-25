@@ -31,7 +31,7 @@ class ThresholdController {
             const threshold = parseFloat(req.body.threshold);
             
             await ThresholdService.updateThreshold(id, threshold);
-            res.redirect('/data-total/dashboard');
+            res.redirect('/dashboard');
         } catch (error) {
             console.error(error);
             res.status(500).render('error', { 

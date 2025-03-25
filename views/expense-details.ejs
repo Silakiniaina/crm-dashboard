@@ -37,7 +37,7 @@
                             <% } else if (type === '2' && expense.lead) { %>
                                 <td><%= expense.lead.leadId %></td>
                             <% } %>
-                            <td><a href="/expense-update-details?id=<%= expense.id %>">Update Amount</a></td>
+                            <td><a href="/expenses/expense-update-details?id=<%= expense.id %>">Update Amount</a></td>
                         </tr>
                     <% }) %>
                 </tbody>
@@ -45,7 +45,7 @@
         <% } else { %>
             <p>No expense details available.</p>
         <% } %>
-        <a href="/data-total" class="back-link">Back to Dashboard</a>
+        <a href="/dashboard" class="back-link">Back to Dashboard</a>
     </section>
 </main>
 

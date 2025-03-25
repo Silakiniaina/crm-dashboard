@@ -22,7 +22,7 @@ const thresholdRoutes = require('./routes/thresholdRoutes');
 
 // Mount routes
 app.use('/', totalDataRoutes);
-app.use('/', expenseRoutes);
+app.use('/expenses', expenseRoutes);
 app.use('/threshold', thresholdRoutes);
 
 // Error handling middleware
