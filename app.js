@@ -20,12 +20,14 @@ const totalDataRoutes = require('./routes/dashboardRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 const thresholdRoutes = require('./routes/thresholdRoutes');
 const leadRoutes = require('./routes/leadRoutes');
+const ticketRoutes = require('./routes/ticketRoutes');
 
 // Mount routes
 app.use('/', totalDataRoutes);
 app.use('/expenses', expenseRoutes);
 app.use('/threshold', thresholdRoutes);
 app.use('/leads', leadRoutes);
+app.use('/tickets', ticketRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
