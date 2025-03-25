@@ -19,11 +19,13 @@ app.set('view engine', 'ejs');
 const totalDataRoutes = require('./routes/dashboardRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 const thresholdRoutes = require('./routes/thresholdRoutes');
+const leadRoutes = require('./routes/leadRoutes');
 
 // Mount routes
 app.use('/', totalDataRoutes);
 app.use('/expenses', expenseRoutes);
 app.use('/threshold', thresholdRoutes);
+app.use('/leads', leadRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
