@@ -2,6 +2,7 @@ const axios = require('axios');
 const JAVA_API_URL = 'http://localhost:8080/api/data-total';
 const JAVA_API_DETAILS_URL = 'http://localhost:8080/api/data-total/details';
 const JAVA_API_EXPENSES_URL = 'http://localhost:8080/api/expenses';
+const JAVA_API_THRESHOLD_URL = 'http://localhost:8080/api/threshold';
 
 class TotalDataService {
     async getTotalData() {
@@ -49,6 +50,29 @@ class TotalDataService {
             throw new Error(error.response.data.data);
         }
     }
-}
 
+    async getThreshold() {
+        try {
+            const response = await axios.get(JAVA_API_THRESHOLD_URL);
+            console.log("Threshold: ", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Erreur lors de la récupération du threshold:", error);
+            throw new Error('Impossible de récupérer le threshold');
+        }
+    }
+
+    async updateThreshold(id, threshold) {
+        try {
+            const response = await axios.post(JAVA_API_THRESHOLD_URL, null, {
+                params: { id, threshold }
+            });
+            console.log(`Updated threshold with id=${id}: `, response.data);
+            return response.data;
+        } catch (error) {
+            console.error(`Erreur lors de la mise à jour du threshold avec id=${id}:`, error);
+            throw new Error('Impossible de mettre à jour le threshold');
+        }0
+    }
+}
 module.exports = new TotalDataService();
