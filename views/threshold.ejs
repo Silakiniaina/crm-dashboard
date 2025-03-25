@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/details.css">
+<%- include('partials/navbar') %>
+
+<main>
+    <h1>Update Budget Alert Threshold</h1>
+    <section class="details">
+        <form method="post" action="/threshold">
+            <input type="hidden" name="id" value="<%= thresholdId %>">
+            <div class="form-group">
+                <label for="threshold">Threshold (%):</label>
+                <input type="number" id="threshold" name="threshold" class="form-control" value="<%= threshold %>" step="0.01" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/data-total" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
