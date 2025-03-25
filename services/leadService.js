@@ -18,7 +18,7 @@ class LeadService{
             const response = await axios.delete(`${BASE_URL}/${id}`)
             return response.data;
         } catch (error) {
-            console.error("Error attempting to delete lead", error);
+            console.error("Error attempting to delete lead with id "+id, error);
             throw new Error('Unable to delete lead with id : '+id);
         }
     }

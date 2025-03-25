@@ -21,12 +21,9 @@ class LeadController{
 
     async deleteLead(req, res){
         try {
-            const id = parseInt(req.body.id);
+            const id = parseInt(req.params.id);
             await LeadService.deleteLead(id);
-            res.render('all-leads',{
-                title : 'All leads',
-                message : 'Lead deleted successfully'
-            })
+            res.redirect(`/leads`);
         } catch (error) {
             console.error(error);
             res.status(500).render('error', { 
