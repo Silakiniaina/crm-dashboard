@@ -1,36 +1,39 @@
 <%- include('partials/header') %>
+<body>
 <%- include('partials/navbar') %>
 
-<main>
-    <h1>Budget Details</h1>
+<main class="container mt-5">
+    <h1 class="mb-4">Budget Details</h1>
     <section class="details">
         <% if (details && details.length > 0) { %>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Amount (Ar)</th>
-                        <th>Created At</th>
-                        <th>Created By</th>
-                        <th>Customer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% details.forEach(budget => { %>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="table-dark">
                         <tr>
-                            <td><%= budget.id %></td>
-                            <td><%= budget.amount.toFixed(2) %></td>
-                            <td><%= budget.createdAt %></td>
-                            <td><%= budget.createdBy.username %></td>
-                            <td><%= budget.customer.name %></td>
+                            <th>ID</th>
+                            <th>Amount (Ar)</th>
+                            <th>Created At</th>
+                            <th>Created By</th>
+                            <th>Customer</th>
                         </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% details.forEach(budget => { %>
+                            <tr>
+                                <td><%= budget.id %></td>
+                                <td><%= budget.amount.toFixed(2) %></td>
+                                <td><%= budget.createdAt %></td>
+                                <td><%= budget.createdBy.username %></td>
+                                <td><%= budget.customer.name %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         <% } else { %>
-            <p>No budget details available.</p>
+            <div class="alert alert-info">No budget details available.</div>
         <% } %>
-        <a href="/dashboard" class="back-link">Back to Dashboard</a>
+        <a href="/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
     </section>
 </main>
 
