@@ -4,7 +4,8 @@ class LeadController{
 
     async getAllLeads(req, res){
         try {
-            const leads = LeadService.getAllLeads().data;
+            const leadsResponse = await LeadService.getAllLeads();
+            const leads = leadsResponse.data;
             res.render('all-leads',{
                 title : 'All leads',
                 leads
