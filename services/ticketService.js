@@ -13,6 +13,15 @@ class TicketService{
         }
     }
 
+    async deleteTicket(id){
+        try {
+            const response = await axios.delete(`${BASE_URL}/${id}`)
+            return response.data;
+        } catch (error) {
+            console.error("Error attempting to delete ticket with id "+id, error);
+            throw new Error('Unable to delete ticket with id : '+id);
+        }
+    }
 }
 
 module.exports = new TicketService();
