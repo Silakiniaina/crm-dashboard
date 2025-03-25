@@ -23,6 +23,23 @@ class ThresholdController {
             });
         }
     }
+
+
+    async updateThreshold(req, res) {
+        try {
+            const id = parseInt(req.body.id);
+            const threshold = parseFloat(req.body.threshold);
+            
+            await ThresholdService.updateThreshold(id, threshold);
+            res.redirect('/data-total/dashboard');
+        } catch (error) {
+            console.error(error);
+            res.status(500).render('error', { 
+                title: 'Error', 
+                message: 'Error while updating threshold' 
+            });
+        }
+    }
 }
 
 module.exports = new ThresholdController();
