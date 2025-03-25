@@ -17,6 +17,7 @@
                             <th>Status</th>
                             <th>Customer</th>
                             <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,14 @@
                                 </td>
                                 <td><%= lead.customer ? lead.customer.name : 'N/A' %></td>
                                 <td><%= lead.createdAt.toLocaleString() %></td>
+                                <td>
+                                    <form action="/leads/<%= lead.leadId %>" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" 
+                                                onclick="return confirm('Are you sure you want to delete this lead?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         <% }) %>
                     </tbody>
