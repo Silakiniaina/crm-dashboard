@@ -1,11 +1,11 @@
 const TotalDataService = require('../services/totalDataService');
 
 class TotalDataController {
-
     async getTotalData(req, res) {
         try {
-            const responseData = await TotalDataService.getTotalData(); 
-            const totalData = responseData.data; 
+            const datas = await TotalDataService.getTotalData(req, res);
+            const totalData = datas.data;
+            if (!totalData) return;
             res.render('dashboard', { 
                 title: 'Dashboard for total data', 
                 totalData
@@ -26,8 +26,9 @@ class TotalDataController {
                 throw new Error('Invalid type parameter');
             }
 
-            const detailsData = await TotalDataService.getTotalDataDetails(type);
-            const details = detailsData.data;
+            const details = await TotalDataService.getTotalDataDetails(req, res, type);
+            if (!details) return;
+            
             let title;
             let pageName = "budget";
             
@@ -46,7 +47,7 @@ class TotalDataController {
                     break;
             }
 
-            res.render(pageName+'-details', { 
+            res.render(pageName + '-details', { 
                 title, 
                 details,
                 type
