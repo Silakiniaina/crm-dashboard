@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // Import routes
-const totalDataRoutes = require('./routes/totalDataRoutes');
+const totalDataRoutes = require('./routes/dashboardRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 const thresholdRoutes = require('./routes/thresholdRoutes');
 
