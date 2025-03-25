@@ -1,15 +1,14 @@
 const LeadService = require('../services/leadService');
 
-class LeadController{
-
-    async getAllLeads(req, res){
+class LeadController {
+    async getAllLeads(req, res) {
         try {
-            const leadsResponse = await LeadService.getAllLeads();
-            const leads = leadsResponse.data;
-            res.render('all-leads',{
-                title : 'All leads',
+            const leads = await LeadService.getAllLeads(req, res);
+            if (!leads) return; // authenticatedFetch handles redirect
+            res.render('all-leads', {
+                title: 'All leads',
                 leads
-            })
+            });
         } catch (error) {
             console.error(error);
             res.status(500).render('error', { 
@@ -19,10 +18,11 @@ class LeadController{
         }
     }
 
-    async deleteLead(req, res){
+    async deleteLead(req, res) {
         try {
             const id = parseInt(req.params.id);
-            await LeadService.deleteLead(id);
+            const result = await LeadService.deleteLead(req, res, id);
+            if (!result) return; // authenticatedFetch handles redirect
             res.redirect(`/leads`);
         } catch (error) {
             console.error(error);
