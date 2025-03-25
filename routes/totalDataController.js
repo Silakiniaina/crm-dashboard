@@ -106,4 +106,41 @@ router.post('/expense-update-details', async (req, res) => {
     }
 });
 
+router.get('/threshold', async (req, res) => {
+    try {
+        const responseData = await totalDataService.getThreshold();
+        const thresholdData = responseData.data;
+        res.render('threshold', {
+            title: 'Update Budget Alert Threshold',
+            thresholdId: thresholdData ? thresholdData.id : 0,
+            threshold: thresholdData ? thresholdData.threshold : 0,
+            page: 'threshold'
+        });
+    } catch (error) {
+        console.error(error);
+        res.render('threshold', {
+            title: 'Update Budget Alert Threshold',
+            thresholdId: 0,
+            threshold: 0,
+            page: 'threshold'
+        }); // Fallback to default values if fetch fails
+    }
+});
+
+router.post('/threshold', async (req, res) => {
+    try {
+        console.log("Req.body: ", req.body);
+        const id = parseInt(req.body.id);
+        const threshold = parseFloat(req.body.threshold);
+        await totalDataService.updateThreshold(id, threshold);
+        res.redirect('/data-total');
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { 
+            title: 'Error', 
+            message: 'Error while updating threshold' 
+        });
+    }
+});
+
 module.exports = router;
