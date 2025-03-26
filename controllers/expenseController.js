@@ -11,7 +11,7 @@ class ExpenseController {
             res.render('expense-update-details', {
                 title: 'Update Expense Amount',
                 expenseId: id,
-                amount: expense.amount.toString(),
+                amount: expense.data.amount.toString(),
                 type,
                 page: 'expense-update-details'
             });
@@ -28,14 +28,17 @@ class ExpenseController {
         try {
             const id = parseInt(req.body.id);
             const amount = parseFloat(req.body.amount);
+
+            if(amount < 0){
+                throw new Error("Amount for expense should be positive");
+            }
             
             const updateResult = await ExpenseService.updateExpense(req, res, id, amount);
             if (!updateResult) return;
 
             const expense = await ExpenseService.getExpenseById(req, res, id);
             if (!expense) return;
-            
-            const type = expense.ticket ? '1' : expense.lead ? '2' : null;
+            const type = expense.data.ticket ? '1' : expense.data.lead ? '2' : null;
 
             if (!type) {
                 throw new Error('Unable to determine expense type');
