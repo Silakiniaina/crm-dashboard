@@ -1,20 +1,30 @@
-const TotalDataService = require('../services/totalDataService');
+const GraphService = require('../services/graphService');
+const TotalDataService = require('../services/totalDataService'); // Si tu veux garder les données totales
 
-class TotalDataController {
-    async getTotalData(req, res) {
+class DashboardController {
+    async getDashboard(req, res) {
         try {
-            const datas = await TotalDataService.getTotalData(req, res);
-            const totalData = datas.data;
-            if (!totalData) return;
+            // Récupérer les données totales (si elles existent encore dans ton API)
+            const totalDataResponse = await TotalDataService.getTotalData(req, res);
+            const totalData = totalDataResponse ? totalDataResponse.data : {};
+
+            // Récupérer les données des graphiques
+            const budgetVsExpenses = await GraphService.getBudgetVsExpenses(req, res) || [];
+            const leadConversionRate = await GraphService.getLeadConversionRate(req, res) || [];
+            const averageExpenses = await GraphService.getAverageExpenses(req, res) || [];
+
             res.render('dashboard', { 
-                title: 'Dashboard for total data', 
-                totalData
+                title: 'Dashboard', 
+                totalData: totalData || { totalBudget: 0, totalTicketExpense: 0, totalLeadExpense: 0 },
+                budgetVsExpenses,
+                leadConversionRate,
+                averageExpenses
             });
         } catch (error) {
             console.error(error);
             res.status(500).render('error', { 
                 title: 'Error', 
-                message: 'Error while fetching data' 
+                message: 'Error while fetching dashboard data' 
             });
         }
     }
@@ -26,7 +36,8 @@ class TotalDataController {
                 throw new Error('Invalid type parameter');
             }
 
-            const details = await TotalDataService.getTotalDataDetails(req, res, type);
+            const responseDetails = await TotalDataService.getTotalDataDetails(req, res, type);
+            const details = responseDetails.data;
             if (!details) return;
             
             let title;
@@ -53,7 +64,6 @@ class TotalDataController {
                 type
             });
         } catch (error) {
-            console.error(error);
             res.status(500).render('error', { 
                 title: 'Error', 
                 message: 'Error while fetching details' 
@@ -62,4 +72,4 @@ class TotalDataController {
     }
 }
 
-module.exports = new TotalDataController();
+module.exports = new DashboardController();

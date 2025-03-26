@@ -3,8 +3,9 @@ const LeadService = require('../services/leadService');
 class LeadController {
     async getAllLeads(req, res) {
         try {
-            const leads = await LeadService.getAllLeads(req, res);
-            if (!leads) return; // authenticatedFetch handles redirect
+            const leadsData = await LeadService.getAllLeads(req, res);
+            const leads = leadsData.data;
+            if (!leads) return; 
             res.render('all-leads', {
                 title: 'All leads',
                 leads

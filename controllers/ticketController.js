@@ -3,7 +3,8 @@ const TicketService = require('../services/ticketService');
 class TicketController {
     async getAllTickets(req, res) {
         try {
-            const tickets = await TicketService.getAllTickets(req, res);
+            const ticketsData = await TicketService.getAllTickets(req, res);
+            const tickets = ticketsData.data;
             if (!tickets) return;
             res.render('all-tickets', {
                 title: 'All tickets',

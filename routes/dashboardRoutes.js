@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const TotalDataController = require('../controllers/totalDataController');
+const DashboardController = require('../controllers/dashboardController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/dashboard', authMiddleware.isAuthenticated, TotalDataController.getTotalData);
-router.get('/data-total/details', authMiddleware.isAuthenticated, TotalDataController.getTotalDataDetails);
+router.get('/dashboard', authMiddleware.isAuthenticated, DashboardController.getDashboard);
+router.get('/data-total/details', authMiddleware.isAuthenticated, DashboardController.getTotalDataDetails);
 
 module.exports = router;

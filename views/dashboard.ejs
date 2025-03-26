@@ -3,12 +3,13 @@
 <%- include('partials/navbar') %>
 
 <main class="container mt-5">
+    <!-- Section des données totales -->
     <div class="dashboard row mt-5">
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Budget</h5>
-                    <p class="card-text fs-4"><%= totalData.totalBudget.toFixed(2) %> Ar</p>
+                    <h5 class="card-title">Total Budget</h5>
+                    <p class="card-text fs-4"><%= totalData.totalBudget ? totalData.totalBudget.toFixed(2) : '0.00' %> Ar</p>
                     <a href="/data-total/details?type=0" class="btn btn-primary">View Details</a>
                 </div>
             </div>
@@ -16,8 +17,8 @@
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Ticket Expenses</h5>
-                    <p class="card-text fs-4"><%= totalData.totalTicketExpense.toFixed(2) %> Ar</p>
+                    <h5 class="card-title">Total Ticket Expenses</h5>
+                    <p class="card-text fs-4"><%= totalData.totalTicketExpense ? totalData.totalTicketExpense.toFixed(2) : '0.00' %> Ar</p>
                     <a href="/data-total/details?type=1" class="btn btn-primary">View Details</a>
                 </div>
             </div>
@@ -25,13 +26,130 @@
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Lead Expenses</h5>
-                    <p class="card-text fs-4"><%= totalData.totalLeadExpense.toFixed(2) %> Ar</p>
+                    <h5 class="card-title">Total Lead Expenses</h5>
+                    <p class="card-text fs-4"><%= totalData.totalLeadExpense ? totalData.totalLeadExpense.toFixed(2) : '0.00' %> Ar</p>
                     <a href="/data-total/details?type=2" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section des graphiques -->
+    <div class="row mt-5">
+        <!-- Graphique Budget vs Dépenses par Client -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Budgets vs Expenses by Customer</h5>
+                    <canvas id="budgetVsExpensesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Graphique Taux de Conversion des Leads -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Lead Conversion Rate by Month</h5>
+                    <canvas id="leadConversionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Graphique Dépenses Moyennes par Ticket et Lead -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Average Expenses by Type</h5>
+                    <canvas id="avgExpensesChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </main>
 
+<!-- Inclure Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Données passées depuis le serveur
+    const budgetVsExpensesData = <%- JSON.stringify(budgetVsExpenses) %>;
+    const leadConversionData = <%- JSON.stringify(leadConversionRate) %>;
+    const avgExpensesData = <%- JSON.stringify(averageExpenses) %>;
+
+    // Graphique Budget vs Dépenses par Client (Grouped Bar Chart)
+    const budgetVsExpensesCtx = document.getElementById('budgetVsExpensesChart').getContext('2d');
+    new Chart(budgetVsExpensesCtx, {
+        type: 'bar',
+        data: {
+            labels: budgetVsExpensesData.map(item => item.customerName),
+            datasets: [
+                {
+                    label: 'Total Budget',
+                    data: budgetVsExpensesData.map(item => item.totalBudget),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Total Expenses',
+                    data: budgetVsExpensesData.map(item => item.totalExpenses),
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Graphique Taux de Conversion des Leads (Line Chart)
+    const leadConversionCtx = document.getElementById('leadConversionChart').getContext('2d');
+    new Chart(leadConversionCtx, {
+        type: 'line',
+        data: {
+            labels: leadConversionData.map(item => item.month),
+            datasets: [{
+                label: 'Conversion Rate (%)',
+                data: leadConversionData.map(item => item.conversionRate),
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+
+    // Graphique Dépenses Moyennes par Type (Bar Chart)
+    const avgExpensesCtx = document.getElementById('avgExpensesChart').getContext('2d');
+    new Chart(avgExpensesCtx, {
+        type: 'bar',
+        data: {
+            labels: avgExpensesData.map(item => item.type),
+            datasets: [{
+                label: 'Average Expense (Ar)',
+                data: avgExpensesData.map(item => item.avgExpense),
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
 <%- include('partials/footer') %>
+</body>
+</html>
