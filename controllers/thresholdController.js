@@ -6,7 +6,6 @@ class ThresholdController {
             const thresholdData = await ThresholdService.getThreshold(req, res);
             const thresholdId = thresholdData ? thresholdData.data.id : 0;
             const threshold = thresholdData ? thresholdData.data.threshold : 0;
-            console.log(thresholdData);
             if (!thresholdData) return;
             res.render('threshold', {
                 title: 'Update Budget Alert Threshold',
