@@ -16,7 +16,6 @@ class AuthController {
         if (response.success) {
             req.session.user = response.data.userDetails;
             req.session.token = response.data.token;
-            console.log(req.session.token);
             return res.redirect("/dashboard");
         }
 
