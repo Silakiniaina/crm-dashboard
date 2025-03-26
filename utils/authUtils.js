@@ -27,8 +27,11 @@ class AuthUtils {
 
             return response.data; 
         } catch (error) {
-            console.error("API fetch error:", error.message);
-            res.status(500).send(`API Error: ${error.message}`);
+            console.error("API fetch error:", error);
+            res.status(500).render('error', { 
+                title: 'Error', 
+                message: error.response.data.data
+            }); 
             return null;
         }
     }
